@@ -1,13 +1,18 @@
 
+const yargs = require('yargs');
 const { crearArchivo } = require('./helpers/mutiplicar')
+
+
 
 console.clear();
 
-let base = 3;
+console.log( yargs.argv);
 
-crearArchivo(base)
-        .then( nombreArchivo => console.log(nombreArchivo, 'creado') )
-        .catch( err => console.log(err))
+// let base = 3;
+
+// crearArchivo(base)
+//         .then( nombreArchivo => console.log(nombreArchivo, 'creado') )
+//         .catch( err => console.log(err))
 
 
 
