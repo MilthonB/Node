@@ -1,6 +1,6 @@
 
 const { crearArchivo } = require('./helpers/mutiplicar')
-const yargs = require('./config/yargs')
+const yargs = require('./config/yargs');
 
 
 console.clear();
