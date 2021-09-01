@@ -53,3 +53,25 @@ const getSalario = (id) => {
     });
 
 }
+
+
+const getInfUsuario = async (id) => {
+
+    try {
+
+        const empleado = await getEmpleado(id);
+        const salario = await getSalario(id);
+
+        return `El empleado ${empleado} tiene un salario de ${salario}`
+
+    } catch (error) {
+        throw error;
+    }
+
+}
+
+getInfUsuario(2)
+        .then( msg => console.log(msg) )
+        .catch(err => console.log(err))
+
+
