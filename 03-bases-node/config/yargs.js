@@ -12,6 +12,12 @@ const yargs = require('yargs')
         desc: 'Muestra la tabla en consola',
         default: false
     })
+    .options('h', {
+        alias: 'hasta',
+        type: 'numero',
+        desc: 'Muestra el limite de la tabla',
+        default: 10
+    })
     .check((argv, option) => {
         if (isNaN(argv.b)) {
             throw ('La base tiene que se de tipo numero')
