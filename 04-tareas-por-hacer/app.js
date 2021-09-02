@@ -5,14 +5,18 @@ const { mostrarMenu, pausa } = require('./helpers/mensajes');
 
 
 console.clear();
+
+let opt = ''
+
 const main = async () => {
 
+    do{
 
-    console.log('Hola Mundo');
+        opt = await mostrarMenu();
+        
+        if( opt !== '0') await pausa();
 
-    mostrarMenu();
-    // pausa();
-
+    }while( opt != '0' );
 
 }
 
