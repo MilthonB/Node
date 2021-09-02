@@ -25,7 +25,7 @@ const mostrarMenu = () => {
             output: process.stdout
         });
 
-        readline.question('Seleccione una opcion: ', (opt) => {
+        readline.question('Seleccione una opcion: \n', (opt) => {
             readline.close();
             resolve(opt);
 
