@@ -25,7 +25,7 @@ const preguntas = [
             },
             {
                 value: '5',
-                name: `${'5.'.green} Crear Completar tareas(s)`
+                name: `${'5.'.green} Completar tareas(s)`
             },
             {
                 value: '6',

@@ -14,16 +14,16 @@ const main = async () => {
 
     const tareasDB = leerDB();
 
-    if( tareasDB ){
+    if (tareasDB) {
 
         //cargar tareas de la lectura del archivo json en db 
-        tareas.cargarTareasFromArray( tareasDB );
+        tareas.cargarTareasFromArray(tareasDB);
         // console.log(tareasDB)
 
     }
 
 
-    do{
+    do {
 
         //Imprimir el menú
         opt = await inquirerMenu();
@@ -32,20 +32,35 @@ const main = async () => {
             case '1':
                 //crear opciones
                 const desc = await leerInput('Descripcion: ');
-                tareas.crearTarea( desc )
+                tareas.crearTarea(desc)
                 break;
 
             case '2':
+                tareas.listadoTareas();
+                break;
+            case '3':
                 tareas.listadoCompleto();
+                break;
+            case '4':
+                tareas.listadoPendiente();
+                break;
+            case '5':
+                tareas.listadoPendiente();
+                break;
+            case '6':
+                tareas.listadoPendiente();
+                break;
+            case '0':
+                tareas.listadoPendiente();
                 break;
         }
 
-        guardarDB( tareas.listadoArr )
+        guardarDB(tareas.listadoArr)
 
         // if( opt !== '0') 
         await pausa();
 
-    }while( opt != '0' );
+    } while (opt != '0');
 
 }
 
