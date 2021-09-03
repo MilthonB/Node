@@ -16,6 +16,10 @@ const main = async () => {
 
     if( tareasDB ){
 
+        //cargar tareas de la lectura del archivo json en db 
+        tareas.cargarTareasFromArray( tareasDB );
+        // console.log(tareasDB)
+
     }
         await pausa();
 
