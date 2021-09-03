@@ -13,7 +13,7 @@ const main = async () => {
 
     do{
 
-        
+        //Imprimir el menú
         opt = await inquirerMenu();
 
         switch (opt) {
@@ -24,7 +24,7 @@ const main = async () => {
                 break;
 
             case '2':
-                console.log(tareas._listado)
+                console.log(tareas.listadoArr)
                 break;
         }
 
