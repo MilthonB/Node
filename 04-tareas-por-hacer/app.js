@@ -46,6 +46,7 @@ const main = async () => {
                 break;
             case '5':
                 const ids = await checkListTareas( tareas.listadoArr )
+                tareas.completarTareas(ids);
                 console.log(ids);
                 break;
             case '6':
