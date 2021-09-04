@@ -1,9 +1,12 @@
+const fs = require('fs');
+
 const axios = require('axios');
 require('dotenv').config();
 
 class Busquedas {
 
     historial = [];
+    path = './db/historial.json';
 
     constructor() {
 
@@ -73,6 +76,42 @@ class Busquedas {
         } catch (error) {
             console.log(error);            
         }
+
+    }
+
+    agregarArrayHistorial( lugares = [] ){
+
+        lugares.forEach( lugar => {
+            this.historial.push(lugar);
+        });
+
+    }
+
+    guardarHistorial( lugar = '' ){
+
+        if( this.historial.includes(lugar) ) return;
+
+        this.historial.push(lugar);
+
+        this.guardarDB();
+
+    }
+
+    guardarDB(){
+        const payload = {
+            historial: this.historial
+        }
+        fs.writeFileSync(this.path, JSON.stringify(payload) );
+    }
+
+    leerDB(){
+
+        if( !fs.existsSync(this.path) ) return
+
+        const data = fs.readFileSync(this.path,{encoding: 'utf-8'});
+        const historial = JSON.parse(data);
+
+        return historial;
 
     }
 

@@ -11,6 +11,12 @@ const main = async () => {
     let opt;
     const busqueda = new Busquedas();
 
+    const { historial } = busqueda.leerDB();
+
+    if( historial ){
+        busqueda.agregarArrayHistorial( historial );
+    }
+
     do {
 
         opt = await inquirerMenu();
@@ -27,7 +33,12 @@ const main = async () => {
 
                 //Seleccionar el luebas
                 const ids = await listadoLugares(lugares)
+                if( ids === '0' ) continue;
+                
                 const { nombre, lat, lng } = lugares.find(lugar => lugar.id === ids);
+
+                //se manda el nombre del lugar y se alamacena 
+                busqueda.guardarHistorial(nombre);
 
                 //Datos del clima
                 const { desc, min, max, temp } = await busqueda.climaLugar(lng, lat);
@@ -46,6 +57,13 @@ const main = async () => {
 
             case 2:
                 //Historial
+                busqueda.historial.forEach( (lugar, i) => {
+                    const idx = `${ i +1 }.`;
+                    console.log(`${idx} ${lugar.green}`);
+                })
+
+                busqueda.leerDB();
+
                 break;
             case 0:
                 //Salir
