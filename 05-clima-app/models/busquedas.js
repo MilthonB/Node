@@ -27,9 +27,12 @@ class Busquedas {
             });
 
             const peticion = await intace.get();
-            console.log(peticion.data);
-
-            return []; //retornar los lugares 
+            return peticion.data.features.map(lugar => ({
+                id: lugar.id,
+                nombre: lugar.place_name,
+                lat: lugar.center[0], 
+                lng: lugar.center[1]
+            }));
 
         } catch (error) {
             return []; //retornar los lugares 
