@@ -1,4 +1,5 @@
 const axios = require('axios');
+require('dotenv').config();
 
 class Busquedas {
 
@@ -6,15 +7,28 @@ class Busquedas {
 
     constructor() {
 
-    }   
+    }
+
+    get paramsMAPBOX() {
+        return {
+            'access_token': process.env.MAPBOX_KEY,
+            'limit': '5',
+            'language': 'es'
+        }
+    }
 
     async ciudad(lugar = "") {
         //Peticion http
 
         try {
+            const intace = axios.create({
+                baseURL: `https://api.mapbox.com/geocoding/v5/mapbox.places/${lugar}.json`,
+                params: this.paramsMAPBOX
+            });
 
-            const peticion = await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/mexico.json?access_token=pk.eyJ1IjoiZWwtcGlvbGFzIiwiYSI6ImNrdDU1eHBwOTA1YW8ydnBnZW5pZW5mZmIifQ.h7afGroJajeQKSgzNjy_nQ&limit=5&language=es')
+            const peticion = await intace.get();
             console.log(peticion.data);
+
             return []; //retornar los lugares 
 
         } catch (error) {
