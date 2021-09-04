@@ -59,7 +59,7 @@ class Tareas {
             const idx = `${index + 1}`.green;
             const { desc, completadaEn } = tarea;
             if (completadaEn) {
-                console.log(`${idx} ${desc} :: ${'Completado'.green}`)
+                console.log(`${idx} ${desc} :: ${completadaEn}`)
             }
 
         })
@@ -76,6 +76,14 @@ class Tareas {
 
         })
     }
+
+    borrarTarea( id='' ){
+
+        delete this._listado[id];
+
+    }
+
+    
 
 }
 

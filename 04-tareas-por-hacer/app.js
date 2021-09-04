@@ -1,7 +1,7 @@
 require('colors');
 
 const { guardarDB, leerDB } = require('./helpers/guardarArchivo');
-const { inquirerMenu, pausa, leerInput } = require('./helpers/inquire');
+const { inquirerMenu, pausa, leerInput, listadoTareasBorrar,confirmarAccion, checkListTareas } = require('./helpers/inquire');
 const Tarea = require('./model/tarea');
 const Tareas = require('./model/tareas');
 
@@ -45,13 +45,21 @@ const main = async () => {
                 tareas.listadoPendiente();
                 break;
             case '5':
-                tareas.listadoPendiente();
+                const ids = await checkListTareas( tareas.listadoArr )
+                console.log(ids);
                 break;
             case '6':
-                tareas.listadoPendiente();
+                const id = await listadoTareasBorrar( tareas.listadoArr );
+                if( id !== '0'){
+                    const confirmar = await confirmarAccion( '¿Estás seguro?' )
+                    if( confirmar ){
+                        tareas.borrarTarea( id );
+                        console.log('Tarea eliminada');
+                    }
+                }
                 break;
             case '0':
-                tareas.listadoPendiente();
+                tareas.listadoTareasBorrar();
                 break;
         }
 
