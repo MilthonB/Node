@@ -89,13 +89,7 @@ class Busquedas {
 
     }
 
-    agregarArrayHistorial( lugares = [] ){
-
-        lugares.forEach( lugar => {
-            this.historial.push(lugar);
-        });
-
-    }
+  
 
     guardarHistorial( lugar = '' ){
 
