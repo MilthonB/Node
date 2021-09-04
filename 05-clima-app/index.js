@@ -1,4 +1,5 @@
-const { leerInput, inquirerMenu, pausa } = require('./helpers/inquire')
+const { leerInput, inquirerMenu, pausa } = require('./helpers/inquire');
+const Busquedas = require('./models/busquedas');
 
 
 
@@ -8,6 +9,7 @@ const main = async () => {
 
 
     let opt;
+    const busqueda = new Busquedas();
 
     do {
 
@@ -18,7 +20,9 @@ const main = async () => {
                 //Buscar ciudad
                 //Mostrar mensaje
                 const lugar = await leerInput('Ciudad: ')
-                console.log(lugar); 
+                // console.log(lugar); 
+                await busqueda.ciudad( lugar )
+
                 //Buscar los lugares
                 // / Seleccionar el luebas
                 //Datos del clima
