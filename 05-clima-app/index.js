@@ -11,11 +11,11 @@ const main = async () => {
     let opt;
     const busqueda = new Busquedas();
 
-    const { historial } = busqueda.leerDB();
+   busqueda.leerDB();
 
-    if( historial ){
-        busqueda.agregarArrayHistorial( historial );
-    }
+    // if( historial ){
+    //     busqueda.agregarArrayHistorial( historial );
+    // }
 
     do {
 
@@ -57,12 +57,11 @@ const main = async () => {
 
             case 2:
                 //Historial
-                busqueda.historial.forEach( (lugar, i) => {
+                busqueda.historialCapitalizado.forEach( (lugar, i) => {
                     const idx = `${ i +1 }.`;
                     console.log(`${idx} ${lugar.green}`);
                 })
 
-                busqueda.leerDB();
 
                 break;
             case 0:

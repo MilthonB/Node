@@ -79,6 +79,16 @@ class Busquedas {
 
     }
 
+    get historialCapitalizado(){
+        return this.historial.map( lugar => {
+            let palabras = lugar.split(' ');
+            palabras = palabras.map( p => p[0].toUpperCase() + p.substring(1) );
+            return palabras.join(' ');
+        }) 
+
+
+    }
+
     agregarArrayHistorial( lugares = [] ){
 
         lugares.forEach( lugar => {
@@ -108,10 +118,10 @@ class Busquedas {
 
         if( !fs.existsSync(this.path) ) return
 
-        const data = fs.readFileSync(this.path,{encoding: 'utf-8'});
-        const historial = JSON.parse(data);
+        const info = fs.readFileSync(this.path,{encoding: 'utf-8'});
+        const data = JSON.parse(info);
 
-        return historial;
+        this.historial = data.historial;
 
     }
 
