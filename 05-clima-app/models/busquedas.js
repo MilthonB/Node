@@ -4,18 +4,24 @@ class Busquedas {
 
     historial = [];
 
-    constructor(){
+    constructor() {
 
-    }
+    }   
 
-    async ciudad( lugar="" ){
+    async ciudad(lugar = "") {
         //Peticion http
-        console.log(lugar);
 
-        const peticion =  await axios.get('https://reqres.in/api/users?page=2')
-        console.log(peticion.data);
+        try {
 
-        return []; //retornar los lugares 
+            const peticion = await axios.get('https://api.mapbox.com/geocoding/v5/mapbox.places/mexico.json?access_token=pk.eyJ1IjoiZWwtcGlvbGFzIiwiYSI6ImNrdDU1eHBwOTA1YW8ydnBnZW5pZW5mZmIifQ.h7afGroJajeQKSgzNjy_nQ&limit=5&language=es')
+            console.log(peticion.data);
+            return []; //retornar los lugares 
+
+        } catch (error) {
+            return []; //retornar los lugares 
+
+        }
+
     }
 
 }
