@@ -9,8 +9,11 @@ ctrl.usuariosGet = (req, res = response) => {
 }
 
 ctrl.usuariosPost = ( req, res=response ) => {
+
+    const body = req.body
     res.json({
-        msg:'Post API - controlador'
+        msg:'Post API - controlador',
+        body
     })
 }
 
