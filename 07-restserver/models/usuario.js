@@ -10,7 +10,7 @@ const UsuarioSchema = Schema({
     correo: {
         type: String,
         required: [true,'El correo es obligatorio'],
-        unique: true // no permite correo duplicados
+        // unique: true // no permite correo duplicados
     },
     password: {
         type: String,
@@ -21,7 +21,8 @@ const UsuarioSchema = Schema({
     },
     rol: {
         type: String,
-        required: true
+        required: true,
+        emun: ['ADMIN_ROLE','USER_ROLE']
     },
     estado: {
         type: Boolean,
