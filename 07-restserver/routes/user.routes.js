@@ -2,8 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator')
 
 const { validarCampos, validarEmail } = require('../middlewares/validar-campos');
-const { esRolValido } = require('../middlewares/validar-rol');
-const Role = require('../models/role');
+const { esRolValido, validarEmail } = require('../helpers/db-validator');
 
 
 const ctrl = require('../controllers/usuarios.controllers');
