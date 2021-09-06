@@ -1,4 +1,5 @@
-const { validationResult } = require('express-validator')
+const { validationResult } = require('express-validator');
+const Usuario = require('../models/usuario');
 
 
 const validarCampos = ( req, res, next) => {
@@ -13,7 +14,19 @@ const validarCampos = ( req, res, next) => {
 
 }
 
+const validarEmail = async( correo = "") => {
+
+    const existeEmail = await Usuario.findOne({correo});
+    if( existeEmail ){
+
+        throw new Error(`Ese correo ${correo} ya fue tomado`);
+    
+    }
+
+}
+
 
 module.exports = {
-    validarCampos
+    validarCampos,
+    validarEmail
 }
