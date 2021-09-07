@@ -10,7 +10,10 @@ const route = Router();
 
 route.get('/', ctrl.usuariosGet);
 
-route.put('/:id', ctrl.usuariosPut);
+route.put('/:id',[
+    check('id','No es un id válido').isMongoId(),
+    validarCampos
+] ,ctrl.usuariosPut);
 
 route.post('/',[
     check('nombre','El nombre es obligatorio').not().isEmpty(),
