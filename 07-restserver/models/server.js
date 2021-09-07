@@ -9,6 +9,7 @@ class Server{
         this.app = express();
         this.port = process.env.PORT;
         this.routePath = '/api/usuarios';
+        this.authPath = '/api/auth';
 
         //Middleware
         this.middleware();
@@ -39,6 +40,7 @@ class Server{
 
     routes(){
 
+      this.app.use( this.authPath, require('../routes/auth.routes') );
       this.app.use( this.routePath, require('../routes/user.routes') );
 
     }
