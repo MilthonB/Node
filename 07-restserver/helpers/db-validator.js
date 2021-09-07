@@ -21,8 +21,18 @@ const validarEmail = async( correo = "") => {
 
 }
 
+const validoId = async ( id = "" ) => {
+    
+    const existeId = await Usuario.findById( id );
+    if( !existeId ){
+        throw new Error(`El id ${id} no es valido`);
+    }
+
+}
+
 
 module.exports = {
     esRolValido,
-    validarEmail
+    validarEmail,
+    validoId
 }
