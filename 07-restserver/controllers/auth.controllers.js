@@ -1,6 +1,7 @@
 const { response } = require("express");
 const Usuario = require("../models/usuario");
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { generarJWT } = require("../helpers/generar-jwt");
 
 const ctrl = {}
 
@@ -39,6 +40,15 @@ ctrl.login = async ( req, res= response ) => {
 
         // /Generar el jwt
 
+        const token = await generarJWT( usuario.id ); 
+        console.log(usuario.id);
+
+        res.json({
+            usuario,
+            token
+        })
+    
+
     } catch (error) {
         console.log(error);
         res.status(500).json({
@@ -46,10 +56,7 @@ ctrl.login = async ( req, res= response ) => {
         })
     }
 
-    res.json({
-        msg: 'Controlador del login'
-    })
-
+   
 }
 
 
