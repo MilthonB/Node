@@ -1,13 +1,22 @@
 const { Router } = require('express');
 const { check } = require('express-validator')
 
-const { validarCampos } = require('../middlewares/validar-campos');
+// const { validarCampos } = require('../middlewares/validar-campos');
+// const { validarRol, tieneRole } = require('../middlewares/validar-rol');
+// const { validarJWT } = require('../middlewares/validar-jwt');
+
+const {
+    validarCampos,
+    validarRol,
+    tieneRole,
+    validarJWT
+} = require('../middlewares')
+
+
 const { esRolValido, validarEmail, validoId } = require('../helpers/db-validator');
 
 
 const ctrl = require('../controllers/usuarios.controllers');
-const { validarJWT } = require('../middlewares/validar-jwt');
-const { validarRol, tieneRole } = require('../middlewares/validar-rol');
 const route = Router();
 
 route.get('/', ctrl.usuariosGet);
