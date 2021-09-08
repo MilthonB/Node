@@ -6,6 +6,7 @@ const router = Router()
 
 const ctrl = require('../controllers/auth.controllers');
 const { validarCampos } = require('../middlewares/validar-campos');
+const { validarJWT } = require('../middlewares/validar-jwt');
 
 router.post('/login',[
     check('correo', 'El correo no es válido').isEmail(),

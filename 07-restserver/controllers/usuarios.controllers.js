@@ -75,9 +75,12 @@ ctrl.usuariosDelete = async(req, res = response) => {
     // const usuario = await Usuario.findByIdAndDelete(id);
     const usuario = await Usuario.findByIdAndUpdate(id, {estado: false});
 
+    const usuarioAutenticado = req.usuario;
+//    const uid = req.id;
+
     res.json({
-        msg: ' delete API - controlador',
-        usuario
+        usuario,
+        usuarioAutenticado
     })
 }
 
