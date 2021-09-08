@@ -7,6 +7,7 @@ const { esRolValido, validarEmail, validoId } = require('../helpers/db-validator
 
 const ctrl = require('../controllers/usuarios.controllers');
 const { validarJWT } = require('../middlewares/validar-jwt');
+const { validarRol } = require('../middlewares/validar-rol');
 const route = Router();
 
 route.get('/', ctrl.usuariosGet);
@@ -29,6 +30,7 @@ route.post('/',[
 
 route.delete('/:id',[
     validarJWT,
+    validarRol,
     check('id','No es un id válido').isMongoId(),
     check('id').custom( validoId ),
     validarCampos
