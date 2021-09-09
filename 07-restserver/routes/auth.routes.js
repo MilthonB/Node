@@ -14,5 +14,9 @@ router.post('/login',[
     validarCampos
 ],ctrl.login);
 
+router.post('/google',[
+    check('id_token', 'El token no se proveyó').not().isEmpty(),
+    validarCampos
+],ctrl.googleSingIn);
 
 module.exports = router;

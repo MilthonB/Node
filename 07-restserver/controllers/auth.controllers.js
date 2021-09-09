@@ -60,4 +60,18 @@ ctrl.login = async ( req, res= response ) => {
 }
 
 
+ctrl.googleSingIn = ( req, res ) => {
+
+    const { id_token } = req.body;
+
+    res.json({
+        msg: 'Esta todo bien ',
+        id_token
+    })
+
+
+
+}
+
+
 module.exports = ctrl;
