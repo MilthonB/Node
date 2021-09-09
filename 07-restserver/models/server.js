@@ -8,8 +8,12 @@ class Server{
     constructor(){
         this.app = express();
         this.port = process.env.PORT;
-        this.routePath = '/api/usuarios';
-        this.authPath = '/api/auth';
+        
+        this.paths = {
+            auth      : '/api/auth',
+            categorias: '/api/categorias',
+            usuario   : '/api/usuarios',
+        };
 
         //Middleware
         this.middleware();
@@ -40,8 +44,9 @@ class Server{
 
     routes(){
 
-      this.app.use( this.authPath, require('../routes/auth.routes') );
-      this.app.use( this.routePath, require('../routes/user.routes') );
+      this.app.use( this.paths.auth, require('../routes/auth.routes') );
+      this.app.use( this.paths.categorias, require('../routes/categorias.routes') );
+      this.app.use( this.paths.usuario, require('../routes/user.routes') );
 
     }
 
