@@ -10,7 +10,7 @@ const obtenerCategorias = async (req = request, res = response) => {
 
     const [total, categorias] = await Promise.all([
 
-        Categoria.countDocuments({ query }),
+        Categoria.countDocuments( query ),
         Categoria.find(query)
             .skip(Number(desde))
             .limit(Number(limit))
@@ -96,7 +96,7 @@ const borrarCategoria = async (req = request, res = response) => {
     // solo actualizar el estado a falso
     const { id } = req.params;
 
-    const categoriaEliminar = await Categoria.findByIdAndUpdate(id,{estado:false});
+    const categoriaEliminar = await Categoria.findByIdAndUpdate(id,{estado:false}, {new:true});
 
     const usuarios = req.usuario;
 
