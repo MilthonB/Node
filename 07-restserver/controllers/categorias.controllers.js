@@ -91,6 +91,18 @@ const actualizarCategoria = async (req = request, res = response) => {
 const borrarCategoria = async (req = request, res = response) => {
 
     // solo actualizar el estado a falso
+    const { id } = req.params;
+
+    const categoriaEliminar = await Categoria.findByIdAndUpdate(id,{estado:false});
+
+    const usuarios = req.usuario;
+
+    res.json({
+        id,
+        usuarios,
+        categoriaEliminar
+    })
+
 
 }
 

@@ -2,9 +2,9 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-const { crearCategoria, obtenerCategoria, obtenerCategorias, actualizarCategoria } = require('../controllers/categorias.controllers');
+const { crearCategoria, obtenerCategoria, obtenerCategorias, actualizarCategoria, borrarCategoria } = require('../controllers/categorias.controllers');
 const { existeCategoria } = require('../helpers/db-validator');
-const { validarJWT, validarCampos } = require('../middlewares');
+const { validarJWT, validarCampos, tieneRole } = require('../middlewares');
 
 const route = Router();
 
@@ -34,9 +34,13 @@ route.put('/:id',[
 ] , actualizarCategoria);
 
 //Borrar una categoria - Admin
-route.delete('/:id', (req, res) => {
-    res.json('Delete')
-});
+route.delete('/:id',[
+    validarJWT,
+    tieneRole( 'VENTAS_ROLE','ADMIN_ROLE','OTRO_ROLE' ),
+    check('id','Id no válido').isMongoId(),
+    check('id').custom(existeCategoria),
+    validarCampos
+],borrarCategoria);
 
 
 module.exports = route
