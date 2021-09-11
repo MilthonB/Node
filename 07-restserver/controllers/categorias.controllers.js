@@ -3,7 +3,6 @@ const { response, request } = require('express');
 const { Categoria } = require('../models');
 
 //obtenerCategorias - paginado - total - populate
-
 const obtenerCategorias = async (req = request, res = response) => {
 
     const { limit=5, desde=0 } = req.query;
@@ -15,6 +14,7 @@ const obtenerCategorias = async (req = request, res = response) => {
         Categoria.find(query)
             .skip(Number(desde))
             .limit(Number(limit))
+            .populate('usuario')
 
     ])
 
