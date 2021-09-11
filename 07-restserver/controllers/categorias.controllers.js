@@ -4,7 +4,24 @@ const { Categoria } = require('../models');
 
 //obtenerCategorias - paginado - total - populate
 
-const obtenerCategorias = async () => {
+const obtenerCategorias = async (req = request, res = response) => {
+
+    const { limit=5, desde=0 } = req.query;
+    const query = { estado : true};
+
+    const [total, categorias] = await Promise.all([
+
+        Categoria.countDocuments({query}),
+        Categoria.find(query)
+            .skip(Number(desde))
+            .limit(Number(limit))
+
+    ])
+
+    res.status(200).json({
+        categorias,
+        total
+    })
 
 }
 
@@ -67,5 +84,6 @@ const borrarCategoria = async () => {
 
 module.exports = {
     crearCategoria,
-    obtenerCategoria
+    obtenerCategorias,
+    obtenerCategoria,
 }
