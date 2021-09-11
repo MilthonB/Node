@@ -14,7 +14,7 @@ const obtenerCategorias = async (req = request, res = response) => {
         Categoria.find(query)
             .skip(Number(desde))
             .limit(Number(limit))
-            .populate('usuario')
+            .populate('usuario','nombre')
     ])
 
     res.status(200).json({
@@ -29,12 +29,10 @@ const obtenerCategoria = async (req = request, res = response) => {
 
     const { id } = req.params;
 
-    const { nombre, estado, usuario } = await Categoria.findById(id).populate('usuario');
+    const categoria = await Categoria.findById(id).populate('usuario','nombre');
 
     res.json({
-        nombre,
-        estado,
-        usuario: usuario.nombre
+        categoria
     })
 
 }
