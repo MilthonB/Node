@@ -1,17 +1,39 @@
 
-const { response, request} = require('express');
-const { Categoria } = require('../models')
+const { response, request } = require('express');
+const { Categoria } = require('../models');
 
-const crearCategoria = async(req = request, res = response) => {
+//obtenerCategorias - paginado - total - populate
+
+const obtenerCategorias = async () => {
+
+}
+
+//obtenerCategoria - populate {}
+const obtenerCategoria = async (req = request, res = response) => {
+
+    const { id } = req.params;
+
+    const { nombre, estado, usuario } = await Categoria.findById(id).populate('usuario');
+
+    res.json({
+        nombre,
+        estado,
+        usuario: usuario.nombre
+    })
+
+}
+
+
+const crearCategoria = async (req = request, res = response) => {
 
     const nombre = req.body.nombre.toUpperCase();
 
-    const categoriaDB = await Categoria.findOne({nombre});
+    const categoriaDB = await Categoria.findOne({ nombre });
 
 
-    if( categoriaDB ){
+    if (categoriaDB) {
         return res.status(400).json({
-            msg: `La categoria ${ categoriaDB.nombre } ya existe`
+            msg: `La categoria ${categoriaDB.nombre} ya existe`
         });
     }
 
@@ -32,7 +54,18 @@ const crearCategoria = async(req = request, res = response) => {
 
 }
 
+//actualizarCategoria
+const actualizarCategoria = async () => {
+
+}
+
+//borrarCategoria - estado:false
+const borrarCategoria = async () => {
+
+}
+
 
 module.exports = {
-    crearCategoria
+    crearCategoria,
+    obtenerCategoria
 }
