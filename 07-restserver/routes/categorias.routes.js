@@ -28,6 +28,8 @@ route.post('/',[
 
 //Actualizar categoria - privado - con un token válido
 route.put('/:id',[
+    validarJWT,
+    check('nombre','El nombre es obligatorio').not().isEmpty(),
     check('id','Id no válido').isMongoId(),
     check('id').custom(existeCategoria),
     validarCampos
