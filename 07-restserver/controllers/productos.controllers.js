@@ -2,11 +2,30 @@ const { response, request } = require("express");
 const { Producto } = require("../models");
 
 //obtenerProductos - paginado - total - populate
-const obtenerProductos = ( req, res= response ) => {
+const obtenerProductos = async( req = request, res= response ) => {
+
+    const { limit = 5, desde = 0 } = req.query;
+    const query = {estado : true}
+
+    const [ total, productos ] = await Promise.all([
+
+        Producto.countDocuments(query),
+        Producto.find(query)
+                .skip(Number(desde))
+                .limit(Number(limit))
+                .populate('usuario','nombre')
+                .populate('categoria','nombre')
+
+    ])
+
+
+    res.status(200).json({
+        total,
+        productos
+    })
 
 
 
-    res.json('Hola a todos soy todos los pruductos')
 
 }
 
@@ -41,7 +60,7 @@ const crearProducto = async ( req = request, res = response) =>{
     nuevo.save();
     //mandar res con los datos del producto agregado
 
-    res.json({
+    res.status(201).json({
         nuevo
     })
 
