@@ -25,6 +25,24 @@ const obtenerProductos = async( req = request, res= response ) => {
     })
 
 
+}
+
+const obtenerProducto = async( req = request, res = response )=> {
+
+    //Obtener el id de los params
+    const { id } = req.params;
+
+    //obtener el producto
+    const producto = await Producto.findById(id).populate('usuario','nombre').populate('categoria','nombre');
+    
+   
+
+    res.status(200).json({
+        producto
+    })
+
+    //Si existe obtener los datos y marlos por un 200
+
 
 
 }
@@ -70,5 +88,6 @@ const crearProducto = async ( req = request, res = response) =>{
 
 module.exports = {
     obtenerProductos,
-    crearProducto
+    crearProducto,
+    obtenerProducto
 }

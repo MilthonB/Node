@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerProductos, crearProducto } = require('../controllers/productos.controllers');
+const { obtenerProductos, crearProducto, obtenerProducto } = require('../controllers/productos.controllers');
+const { existeProducto } = require('../helpers/db-validator');
 const { validarJWT, validarCampos } = require('../middlewares');
 
 
@@ -10,6 +11,14 @@ const route = Router();
 //Obtener todos los productos activos - publico - populate
 route.get('/', obtenerProductos);
 
+
+//Obtener una producto por id - Publico
+route.get('/:id',[
+    validarJWT,
+    check('id','El id no es válido').isMongoId(),
+    check('id').custom(existeProducto),
+    validarCampos
+], obtenerProducto)
 
 //Guardar categorias - privado -  con un token valido
 route.post('/',[
