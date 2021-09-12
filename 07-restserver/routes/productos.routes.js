@@ -33,7 +33,7 @@ route.post('/',[
 //Actualizar producto - token valido
 route.put('/:id',[
     validarJWT,
-    check('nombre','El nombre es obligatorio').not().isEmpty(),
+    // check('nombre','El nombre es obligatorio').not().isEmpty(),
     check('categoria','El id de la categoria no es válido').isMongoId(),
     check('categoria').custom(existeCategoria),
     check('id','El id no es válido').isMongoId(),

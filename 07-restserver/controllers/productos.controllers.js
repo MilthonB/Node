@@ -45,12 +45,14 @@ const obtenerProducto = async( req = request, res = response )=> {
 const crearProducto = async ( req = request, res = response) =>{
 
 
+    const { estado,usuario, ...body } = req.body;
+
     //obtener el nombre
-    const nombre = req.body.nombre.toUpperCase();
-    const categoria = req.body.categoria;
+    // const nombre = req.body.nombre.toUpperCase();
+    // const categoria = req.body.categoria;
 
     //verificar si ese nombre existe en la base de datos 
-    const existeNombre = await Producto.findOne({nombre});
+    const existeNombre = await Producto.findOne({nombre:body.nombre});
 
     //Si existe el producto entonces mandas un res status 400
     if( existeNombre ){
@@ -61,20 +63,20 @@ const crearProducto = async ( req = request, res = response) =>{
 
     // Preparar la data que se quiere guardar
     const data = {
-        nombre,
-        usuario: req.usuario._id,
-        categoria
+        ...body,
+        nombre: body.nombre.toUpperCase(),
+        usuario: req.usuario._id
     }
 
     // si no existe hecer un nuevo producto
-    const nuevo = new Producto( data );
+    const producto = new Producto( data );
 
     //Guardar producto
-    nuevo.save();
+    producto.save();
     //mandar res con los datos del producto agregado
 
     res.status(201).json({
-        nuevo
+        producto
     })
 
 } 
@@ -83,9 +85,14 @@ const actualizarProducto = async(req = request, res= response) => {
 
     const {id} = req.params;
 
-    const data  = req.body;
+    // const data  = req.body;
+    const { estado,usuario, ...data } = req.body;
 
-    data.nombre = data.nombre.toUpperCase();
+
+    if(data.nombre){
+        data.nombre = data.nombre.toUpperCase();
+    }
+
     data.usuario = req.usuario._id; 
 
     // const data = {
@@ -108,7 +115,7 @@ const borrarProducto = async(req = request, res = response) => {
 
     const { id } = req.params;
 
-    
+
 
     const producto = await Producto.findByIdAndUpdate(id,{estado:false},{new:true});
 
