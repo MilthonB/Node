@@ -45,7 +45,7 @@ const validarJWT = async( req, res, next ) => {
             msg: 'Token no autorizado'
         })
     }
-    next();
+    next(); 
 }
 
 
