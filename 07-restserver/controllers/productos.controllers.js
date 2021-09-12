@@ -104,9 +104,11 @@ const actualizarProducto = async(req = request, res= response) => {
 
 }
 
-const borrarProducto = (req = request, res = response) => {
+const borrarProducto = async(req = request, res = response) => {
 
     const { id } = req.params;
+
+    
 
     const producto = await Producto.findByIdAndUpdate(id,{estado:false},{new:true});
 

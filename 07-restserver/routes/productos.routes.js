@@ -1,8 +1,9 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { obtenerProductos, crearProducto, obtenerProducto, actualizarProducto } = require('../controllers/productos.controllers');
+const { obtenerProductos, crearProducto, obtenerProducto, actualizarProducto, borrarProducto } = require('../controllers/productos.controllers');
 const { existeProducto } = require('../helpers/db-validator');
-const { validarJWT, validarCampos } = require('../middlewares');
+const { validarJWT, validarCampos, validarRol } = require('../middlewares');
+const role = require('../models/role');
 
 
 const route = Router();
@@ -39,7 +40,14 @@ route.put('/:id',[
 ], actualizarProducto)
 
 
-// router.delete()
+//Delete cambiar el estado a falso de un producto - el usuario debe de tener persimos de rol
+route.delete('/:id',[
+    validarJWT,
+    validarRol,
+    check('id','El id es obligatorio').not().isEmpty(),
+    check('id').custom(existeProducto),
+    validarCampos
+],borrarProducto)
 
 module.exports = route;
 
