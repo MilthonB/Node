@@ -34,17 +34,11 @@ const obtenerProducto = async( req = request, res = response )=> {
 
     //obtener el producto
     const producto = await Producto.findById(id).populate('usuario','nombre').populate('categoria','nombre');
-    
-   
 
+    //Si existe obtener los datos y marlos por un 200
     res.status(200).json({
         producto
     })
-
-    //Si existe obtener los datos y marlos por un 200
-
-
-
 }
 
 
@@ -52,7 +46,8 @@ const crearProducto = async ( req = request, res = response) =>{
 
 
     //obtener el nombre
-    const { nombre, categoria } = req.body;
+    const nombre = req.body.nombre.toUpperCase();
+    const categoria = req.body.categoria;
 
     //verificar si ese nombre existe en la base de datos 
     const existeNombre = await Producto.findOne({nombre});
@@ -84,10 +79,49 @@ const crearProducto = async ( req = request, res = response) =>{
 
 } 
 
+const actualizarProducto = async(req = request, res= response) => {
+
+    const {id} = req.params;
+
+    const data  = req.body;
+
+    data.nombre = data.nombre.toUpperCase();
+    data.usuario = req.usuario._id; 
+
+    // const data = {
+    //     nombre,
+    //     usuario : req.usuario._id,
+    //     categoria
+    // }
+
+    const productoActualizado = await Producto.findByIdAndUpdate(id,data,{new:true});
+
+    res.status(201).json({
+        productoActualizado
+    })
+
+
+
+}
+
+const borrarProducto = (req = request, res = response) => {
+
+    const { id } = req.params;
+
+    const producto = await Producto.findByIdAndUpdate(id,{estado:false},{new:true});
+
+    res.status(200).json({
+        producto
+    })
+
+}
 
 
 module.exports = {
-    obtenerProductos,
+    actualizarProducto,
+    borrarProducto,
+    borrarProducto,
     crearProducto,
-    obtenerProducto
+    obtenerProducto,
+    obtenerProductos,
 }
