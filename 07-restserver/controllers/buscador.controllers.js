@@ -56,7 +56,7 @@ const buscarCategorias = async (termino = "", res = response) => {
 
     const regex = new RegExp(termino, 'i')// busqueda insensible omite mayusculas y minusculas 
 
-    const categoria = await Categoria.find({ nombre: regex },{ estado: true })
+    const categoria = await Categoria.find({ nombre: regex, estado: true })
 
     res.json({ result: categoria })
 
@@ -72,10 +72,11 @@ const buscarProductos = async (termino = "", res = response) => {
     // Nombre
     // Correo
 
+    
     const esValidoId = ObjectId.isValid(termino);
 
     if (esValidoId) {
-        const producto = await Producto.findById(termino);
+        const producto = await Producto.findById(termino).populate('categoria','nombre');
         return res.status(200).json({
             producto: (producto) ? [producto] : []
         })
@@ -83,7 +84,7 @@ const buscarProductos = async (termino = "", res = response) => {
 
     const regex = new RegExp(termino, 'i')// busqueda insensible omite mayusculas y minusculas 
 
-    const producto = await Producto.find({ nombre: regex }, { estado: true })
+    const producto = await Producto.find({ nombre: regex, estado: true  }).populate('categoria','nombre')
 
     res.json({ result: producto })
 
