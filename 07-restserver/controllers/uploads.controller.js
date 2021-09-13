@@ -1,5 +1,6 @@
 const { response } = require("express");
 const path = require('path');
+const { v4 : uuidv4 } = require('uuid') ;
 
 
 const cargarArchivo = (req, res = response) => {
@@ -23,14 +24,15 @@ const cargarArchivo = (req, res = response) => {
     }
 
 
-    // uploadPath = path.join(__dirname, '../uploads/' + archivo.name);
+    const nombreTemp = uuidv4()+ '.'+extension;
+    uploadPath = path.join(__dirname, '../uploads/' + nombreTemp);
 
-    // archivo.mv(uploadPath, (err) => {
-    //     if (err) {
-    //         return res.status(500).json({ err });
-    //     }
-    //     res.status(200).json({ msg: 'File uploaded to ' + uploadPath });
-    // });
+    archivo.mv(uploadPath, (err) => {
+        if (err) {
+            return res.status(500).json({ err });
+        }
+        res.status(200).json({ msg: 'File uploaded to ' + uploadPath });
+    });
 }
 
 
