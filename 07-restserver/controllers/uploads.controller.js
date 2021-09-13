@@ -12,7 +12,7 @@ const cargarArchivo = async(req, res = response) => {
     }
 
     //Imagenes
-    const nombre = await subirArchivo(req.files,   )
+    const nombre = await subirArchivo(req.files,undefined,'imgs')
   
     res.status(200).json({nombre});
 
