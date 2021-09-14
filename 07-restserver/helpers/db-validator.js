@@ -52,10 +52,21 @@ existeProducto = async( id = '') => {
     }
 }
 
+const existeColecion = ( termino, colecciones =[]) => {
+
+    if( !colecciones.includes(termino) ){
+        throw new Error(`La coleccion ${termino} no existe - ${colecciones}`)
+    }
+
+    return true;
+
+}
+
 module.exports = {
     esRolValido,
     validarEmail,
     validoId,
     existeCategoria,
-    existeProducto
+    existeProducto,
+    existeColecion
 }

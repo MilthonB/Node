@@ -1,4 +1,4 @@
-const { response } = require("express");
+const { response, request } = require("express");
 const { subirArchivo } = require("../helpers/subir-archivo");
 
 
@@ -18,7 +18,21 @@ const cargarArchivo = async(req, res = response) => {
 
 }
 
+const actualizarIMG = (req=request, res=response) => {
+
+    const { coleccion, id } = req.params;
+
+    res.json({
+        coleccion,
+        id
+    })
+
+
+
+}
+
 
 module.exports = {
-    cargarArchivo
+    cargarArchivo,
+    actualizarIMG
 }
