@@ -50,9 +50,13 @@ class Server {
                 console.log('Cliente desconectado');
             })
 
-            socket.on( 'enviar-mensaje', (payload) => {
+            socket.on( 'enviar-mensaje', (payload, callback) => {
+
+                const nombre = 'Ya puedes ejecutarte';
+
+                callback(nombre);
                
-                this.io.emit( 'enviar-mensaje', payload );
+                // this.io.emit( 'enviar-mensaje', payload );
 
             });
         
