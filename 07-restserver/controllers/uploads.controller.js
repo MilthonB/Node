@@ -62,7 +62,7 @@ const actualizarIMG = async (req = request, res = response) => {
 
     modelo.img = nombre;
 
-    modelo.save();
+    await modelo.save();
 
     res.status(200).json({
         modelo
@@ -109,9 +109,12 @@ const mostrarImg = async (req, res=response) => {
 
     }
 
-    res.json({
-        msg: 'Falta el placeholder'
-    })
+    const pathImg = path.join(__dirname, '../assets/no-image.jpg');
+    if (fs.existsSync(pathImg)) {
+        return res.sendFile(pathImg);
+    }
+
+    res.json({msg: 'Falta el placeholder'})
 
 }
 
