@@ -1,5 +1,8 @@
 const path = require('path');
 const fs = require('fs');
+const cloudinary = require('cloudinary').v2
+cloudinary.config(process.env.CLOUDINARY_URL);
+
 
 const { response, request } = require("express");
 const { subirArchivo } = require("../helpers/subir-archivo");
