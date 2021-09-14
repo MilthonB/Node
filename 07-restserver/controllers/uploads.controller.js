@@ -73,7 +73,62 @@ const actualizarIMG = async (req = request, res = response) => {
 
 }
 
-const mostrarImg = async (req, res=response) => {
+
+const actualizarIMGCloudinary = async (req = request, res = response) => {
+
+    const { coleccion, id } = req.params;
+
+    let modelo;
+
+    switch (coleccion) {
+        case 'usuario':
+            modelo = await Usuario.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                    msg: 'Id no válido'
+                })
+            }
+            break;
+        case 'producto':
+            modelo = await Producto.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                    msg: 'Id no válido'
+                })
+            }
+            break;
+        default:
+            return res.status(500).json({
+                msg: `La coleccion ${coleccion} no se ha agregado`
+            });
+    }
+
+
+    if( modelo.img ){
+        const nombreArr = modelo.img.split('/');
+        const [id_img] = nombreArr[nombreArr.length -1 ].split('.');
+        cloudinary.uploader.destroy(id_img);
+
+    }
+
+
+    // console.log(req.files.archivo);
+
+    const { tempFilePath } = req.files.archivo;
+    const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+    modelo.img = secure_url;
+
+    await modelo.save();
+
+    res.status(200).json({
+        modelo
+    })
+
+}
+
+
+
+const mostrarImg = async (req, res = response) => {
 
     const { coleccion, id } = req.params;
 
@@ -117,7 +172,7 @@ const mostrarImg = async (req, res=response) => {
         return res.sendFile(pathImg);
     }
 
-    res.json({msg: 'Falta el placeholder'})
+    res.json({ msg: 'Falta el placeholder' })
 
 }
 
@@ -125,5 +180,6 @@ const mostrarImg = async (req, res=response) => {
 module.exports = {
     cargarArchivo,
     actualizarIMG,
-    mostrarImg
+    mostrarImg,
+    actualizarIMGCloudinary
 }
