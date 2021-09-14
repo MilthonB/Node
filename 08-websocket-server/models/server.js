@@ -18,6 +18,9 @@ class Server {
 
         //Rutas de mi aplicación
         this.routes();
+
+        //Sockets
+        this.sockets();
     }
 
 
@@ -35,6 +38,20 @@ class Server {
 
         
 
+    }
+
+    //Sockets 
+    sockets(){
+        this.io.on("connection", socket => {
+
+            console.log('Cliente conectado');
+
+            socket.on('disconnect', () => {
+                console.log('Cliente desconectado');
+            })
+        
+
+        })
     }
 
     listen() {

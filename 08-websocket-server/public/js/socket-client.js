@@ -1,3 +1,4 @@
 
 
-console.log('Hola mundo');
+
+const socket = io(); // para conectar al servidor 
