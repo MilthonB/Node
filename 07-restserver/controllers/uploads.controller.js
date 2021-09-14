@@ -19,8 +19,6 @@ const cargarArchivo = async (req, res = response) => {
 
 const actualizarIMG = async (req = request, res = response) => {
 
-
-
     const { coleccion, id } = req.params;
 
     let modelo;
@@ -36,8 +34,6 @@ const actualizarIMG = async (req = request, res = response) => {
             break;
         case 'producto':
             modelo = await Producto.findById(id);
-    console.log(modelo);
-
             if (!modelo) {
                 return res.status(400).json({
                     msg: 'Id no válido'
@@ -52,10 +48,10 @@ const actualizarIMG = async (req = request, res = response) => {
 
     //limpiar img previas
     console.log(modelo.img);
-    if( modelo.img ){
+    if (modelo.img) {
         //borrar el path del servidor
-        const pathImg = path.join( __dirname, '../uploads', coleccion, modelo.img);
-        if(fs.existsSync(pathImg)){
+        const pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
+        if (fs.existsSync(pathImg)) {
             fs.unlinkSync(pathImg);
         }
 
@@ -74,8 +70,54 @@ const actualizarIMG = async (req = request, res = response) => {
 
 }
 
+const mostrarImg = async (req, res=response) => {
+
+    const { coleccion, id } = req.params;
+
+    let modelo;
+
+    switch (coleccion) {
+        case 'usuario':
+            modelo = await Usuario.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                    msg: 'Id no válido'
+                })
+            }
+            break;
+        case 'producto':
+            modelo = await Producto.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                    msg: 'Id no válido'
+                })
+            }
+            break;
+        default:
+            return res.status(500).json({
+                msg: `La coleccion ${coleccion} no se ha agregado`
+            });
+    }
+
+    //limpiar img previas
+    if (modelo.img) {
+        //borrar el path del servidor
+        const pathImg = path.join(__dirname, '../uploads', coleccion, modelo.img);
+        if (fs.existsSync(pathImg)) {
+            return res.sendFile(pathImg);
+        }
+
+    }
+
+    res.json({
+        msg: 'Falta el placeholder'
+    })
+
+}
+
 
 module.exports = {
     cargarArchivo,
-    actualizarIMG
+    actualizarIMG,
+    mostrarImg
 }
