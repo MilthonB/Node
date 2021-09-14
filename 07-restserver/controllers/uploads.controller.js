@@ -7,11 +7,6 @@ const { Usuario, Producto } = require("../models");
 const cargarArchivo = async (req, res = response) => {
 
 
-    if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
-        res.status(400).json({ msg: ' No hay archivo para subir ' });
-        return;
-    }
-
     //Imagenes
     const nombre = await subirArchivo(req.files, undefined, 'imgs')
 
@@ -19,12 +14,9 @@ const cargarArchivo = async (req, res = response) => {
 
 }
 
-const actualizarIMG = async(req = request, res = response) => {
+const actualizarIMG = async (req = request, res = response) => {
 
-    if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
-        res.status(400).json({ msg: ' No hay archivo para subir ' });
-        return;
-    }
+
 
     const { coleccion, id } = req.params;
 
@@ -33,17 +25,25 @@ const actualizarIMG = async(req = request, res = response) => {
     switch (coleccion) {
         case 'usuario':
             modelo = await Usuario.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                    msg: 'Id no válido'
+                })
+            }
             break;
         case 'producto':
             modelo = await Producto.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                    msg: 'Id no válido'
+                })
+            }
             break;
         default:
             return res.status(500).json({
                 msg: `La coleccion ${coleccion} no se ha agregado`
             });
     }
-
-
 
     const nombre = await subirArchivo(req.files, undefined, coleccion)
 
@@ -52,8 +52,6 @@ const actualizarIMG = async(req = request, res = response) => {
     res.status(200).json({
         modelo
     })
-
-
 
 }
 
