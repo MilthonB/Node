@@ -2,7 +2,8 @@
 
 const online = document.querySelector('#online');
 const offline = document.querySelector('#offline');
-
+const txtMensaje = document.querySelector('#txtMensaje');
+const btnEnviar = document.querySelector('#btnEnviar');
 
 const socket = io(); // Para conectar al servidor 
 
@@ -23,3 +24,17 @@ socket.on('disconnect', () => {
     online.style.display = 'none';
     offline.style.display = '';
 });
+
+btnEnviar.addEventListener( 'click', () => {
+
+    const mensaje = txtMensaje.value;
+    
+    const payload = {
+        mensaje,
+        id:'asd5641as65',
+        fecha: new Date().getTime()
+    }
+
+    socket.emit('enviar-mensaje', payload);
+
+})
