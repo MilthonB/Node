@@ -25,6 +25,10 @@ socket.on('disconnect', () => {
     offline.style.display = '';
 });
 
+socket.on('enviar-mensaje', (payload) => {
+    console.log(payload);
+})
+
 btnEnviar.addEventListener( 'click', () => {
 
     const mensaje = txtMensaje.value;
