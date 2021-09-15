@@ -49,6 +49,8 @@ btnAtender.addEventListener( 'click', () => {
 
 
     })
+
+    
     // socket.emit('siguiente-ticket',null, (ticket) => {
     //     console.log('Hola mundo ', ticket);
     //     lblNuevoTicket.innerText = ticket;
