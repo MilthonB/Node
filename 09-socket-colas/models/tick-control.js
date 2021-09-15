@@ -59,7 +59,7 @@ class TicketControl {
 
         this.guardarDB();
         
-        return 'Nuevo ticket: ' + ticket.numero;
+        return 'T   icket: ' + ticket.numero;
 
     }
 

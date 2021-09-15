@@ -6,7 +6,7 @@ const ticketControl = new TicketControl();
 
 const socketController = (socket) => {
 
-   
+   socket.emit('ultimo-ticket', ticketControl.ultimo);
 
     socket.on('siguiente-ticket', (payload, callback) => {
 
