@@ -1,9 +1,15 @@
 const path = require('path');
 const fs = require('fs');
 
+class Ticket {
+    constructor(escritorio, numero) {
+        this.numero = numero;
+        this.escritorio = escritorio;
+    }
+}
 
 class TicketControl {
-    
+
     constructor() {
         this.ultimo = 0;
         this.hoy = new Date().getDate();
@@ -40,10 +46,45 @@ class TicketControl {
 
     guardarDB() {
 
-        const dbPath = path.join(__dirname,'../db/data.json');
-        fs.writeFileSync(dbPath,JSON.stringify(this.toJson));
+        const dbPath = path.join(__dirname, '../db/data.json');
+        fs.writeFileSync(dbPath, JSON.stringify(this.toJson));
+    }
+
+    siguiente() {
+
+        this.ultimo += 1;
+        const ticket = new Ticket(null,this.ultimo);
+        
+        this.tickets.push(ticket);
+        this.guardarDB();
+        return 'Nuevo ticket: ' + ticket.numero;
 
     }
+
+    atenderTicked( escritorio ){
+
+        if( this.tickets.length === 0 ){
+            return null;
+        }
+
+        const ticket = this.tickets.shift();
+
+        ticket.escritorio = escritorio;
+
+        this.ultimos4.unshift(ticket);
+
+        if( this.ultimos4 > 4 ){
+            this.ultimos4.splice(-1,1);
+        }
+
+        this.guardarDB();
+        
+        return ticket;
+
+
+        
+    }
+
 }
 
 module.exports = TicketControl;
