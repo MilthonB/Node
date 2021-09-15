@@ -8,13 +8,12 @@ const socketController = (socket) => {
 
    
 
-    socket.on('enviar-mensaje', (payload, callback) => {
+    socket.on('siguiente-ticket', (payload, callback) => {
 
-        const nombre = 'Ya puedes ejecutarte';
+        const ticket = ticketControl.siguiente();
 
-        callback(nombre);
+        callback(ticket);
 
-        socket.broadcast.emit( 'enviar-mensaje', payload );
 
     });
 

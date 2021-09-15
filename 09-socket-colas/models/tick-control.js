@@ -56,7 +56,9 @@ class TicketControl {
         const ticket = new Ticket(null,this.ultimo);
         
         this.tickets.push(ticket);
+
         this.guardarDB();
+        
         return 'Nuevo ticket: ' + ticket.numero;
 
     }
@@ -78,7 +80,7 @@ class TicketControl {
         }
 
         this.guardarDB();
-        
+
         return ticket;
 
 
