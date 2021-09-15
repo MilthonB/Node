@@ -1,4 +1,7 @@
+const TicketControl = require("../models/tick-control");
 
+
+const ticketControl = new TicketControl();
 
 
 const socketController = (socket) => {
