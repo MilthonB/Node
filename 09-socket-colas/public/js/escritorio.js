@@ -3,6 +3,7 @@ const lblEscritorio = document.querySelector('h1');
 const btnAtender = document.querySelector('button');
 const atenderSmall = document.querySelector('small');
 const divAlert = document.querySelector('.alert');
+const lblPendientes = document.querySelector('#lblPendientes');
 
  const searchParams = new URLSearchParams(window.location.search); // obtener los parametros del url
 
@@ -27,6 +28,11 @@ socket.on('connect', () => {
 socket.on('disconnect', () => {
     
     btnAtender.disabled = true;
+});
+
+
+socket.on( 'tickets-pendientes', ( pendientes ) => {
+    lblPendientes.innerText = pendientes; 
 });
 
 // socket.on( 'ultimo-ticket', ( ultimo ) => {
