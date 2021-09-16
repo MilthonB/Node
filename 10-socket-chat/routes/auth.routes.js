@@ -19,6 +19,6 @@ router.post('/google',[
     validarCampos
 ],ctrl.googleSingIn);
 
-router.post('/', validarJWT, ctrl.renovarJWT);
+router.get('/', validarJWT, ctrl.renovarJWT);
 
 module.exports = router;
