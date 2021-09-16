@@ -1,6 +1,44 @@
-var url = (window.location.hostname.includes('localhost'))
-    ? 'http://localhost:4500/api/auth/google'
+
+const miFormulario = document.querySelector('form');
+
+
+const url = (window.location.hostname.includes('localhost'))
+    ? 'http://localhost:4500/api/auth/'
     : ''
+
+
+
+    miFormulario.addEventListener('submit', ev => {
+        ev.preventDefault();// Eviata el refresh del navegador web
+        const formData = {};
+
+        for (let el of miFormulario.elements){
+            if(el.name.length > 0)
+                formData[el.name] = el.value;
+            
+        }
+
+
+        fetch( url +'login', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {'Content-Type':'application/json'}
+        })
+        .then( res => res.json())
+        .then( ({ msg, token}) => {
+            if( msg ){
+                return console.error(msg);
+            }
+
+            localStorage.setItem('token', token);
+        })
+        .catch( console.log )
+    })
+
+
+
+
+
 
 function onSignIn(googleUser) {
     // var profile = googleUser.getBasicProfile();
@@ -11,7 +49,7 @@ function onSignIn(googleUser) {
 
     var id_token = googleUser.getAuthResponse().id_token;
     const data = { id_token };
-    fetch(url, {
+    fetch(url+ 'google', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
