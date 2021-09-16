@@ -116,5 +116,18 @@ ctrl.googleSingIn = async (req, res) => {
 
 }
 
+ctrl.renovarJWT = async (req, res= response) => {
+
+    const { usuario } = req;
+
+    const token = await generarJWT(usuario.id)
+
+    res.json({
+        usuario,
+        token 
+    })
+
+}
+
 
 module.exports = ctrl;
