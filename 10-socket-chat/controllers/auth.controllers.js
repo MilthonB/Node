@@ -44,7 +44,7 @@ ctrl.login = async (req, res = response) => {
         // /Generar el jwt
 
         const token = await generarJWT(usuario.id);
-        console.log(usuario.id);
+        
 
         res.json({
             usuario,
@@ -91,6 +91,7 @@ ctrl.googleSingIn = async (req, res) => {
         
         const token = await generarJWT(usuario.id);
 
+        
         if( !usuario.estado ){
 
             res.status(401).json({

@@ -6,12 +6,14 @@ const url = (window.location.hostname.includes('localhost'))
 
 
 
-const usuario = null;
-const socket = null;
+let usuario = null;
+let socket = null;
 
 const validarJWT = async() => {
 
+    // console.log('entro al validar');
     const token = localStorage.getItem('token') || '';
+    console.log(token);
 
     if( token.length <= 10 ){
         throw new Error('Token no existente')
@@ -21,13 +23,24 @@ const validarJWT = async() => {
         headers: {'x-token': token}
     });
 
-    const { usuario: usuarioDB, token: tokenDB } = await resp.json();
+    const { usuario: userDB, token: tokenDB } = await resp.json();
 
-    console.log(usuarioDB, tokenDB);
+    localStorage.setItem('token',tokenDB);
+    usuario = userDB;
+    document.title = usuario.nombre;
 
- 
-
+    await conectarSocket();
 } 
+
+const conectarSocket = async () => {
+    
+    const socket = io({
+        'extraHeaders': { 
+          'x-token': localStorage.getItem('token')
+        }
+      });
+
+}
 
 
 const main = async() => {

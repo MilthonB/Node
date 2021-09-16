@@ -1,11 +1,16 @@
-const { Socket } = require("socket.io")
+const { Socket } = require("socket.io");
+const { comprobarJWT } = require("../middlewares/validar-jwt");
 
 
 
-const socketController = ( socket = new Socket() ) => {
+const socketController = async ( socket ) => {
 
-    console.log('El id es: ',socket.id);
-
+    //recibir el token
+    const usuario = await comprobarJWT(socket.handshake.headers['x-token']); 
+    if( !usuario ){
+        socket.disconnect();
+    } 
+    console.log('Se conecto: '+usuario.nombre);
 
 } 
 

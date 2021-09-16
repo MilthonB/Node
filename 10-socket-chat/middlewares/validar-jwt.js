@@ -20,7 +20,6 @@ const validarJWT = async( req, res, next ) => {
 
         const usuario = await Usuario.findById(id);
 
-        
 
         if( !usuario ){
             return res.status(401).json({
@@ -48,7 +47,33 @@ const validarJWT = async( req, res, next ) => {
     next(); 
 }
 
+const comprobarJWT = async( token = '') => {
+
+    try {
+
+        if( token < 10 ){
+            return null;
+        }
+
+        const { id } = jwt.verify(token,process.env.SECRETEKEY);
+         
+        const usuario = await Usuario.findById(id);
+
+        if( usuario && usuario.estado ){
+            return usuario;
+        }else{
+            return null;
+        }
+        
+    } catch (error) {
+        return null;
+        
+    }
+
+}
+
 
 module.exports = {
-    validarJWT
+    validarJWT,
+    comprobarJWT
 }
