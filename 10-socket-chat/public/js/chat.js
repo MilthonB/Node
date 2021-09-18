@@ -3,52 +3,70 @@ const txtUid = document.querySelector('#txtUid');
 const txtMensaje = document.querySelector('#txtMensaje');
 const ulUsuarios = document.querySelector('#ulUsuarios');
 const ulMensajes = document.querySelector('#ulMensajes');
-const btnSalir  = document.querySelector('#btnSalir');
+const btnSalir = document.querySelector('#btnSalir');
 
 const url = (window.location.hostname.includes('localhost'))
-? 'http://localhost:4500/api/auth/'
-: ''
+    ? 'http://localhost:4500/api/auth/'
+    : ''
 
 
 
 let usuario = null;
 let socket = null;
 
-const validarJWT = async() => {
+const validarJWT = async () => {
 
-    // console.log('entro al validar');
     const token = localStorage.getItem('token') || '';
-    console.log(token);
 
-    if( token.length <= 10 ){
+    if (token.length <= 10) {
         throw new Error('Token no existente')
     }
 
-    const resp = await fetch(url,{
-        headers: {'x-token': token}
+    const resp = await fetch(url, {
+        headers: { 'x-token': token }
     });
 
     const { usuario: userDB, token: tokenDB } = await resp.json();
 
-    localStorage.setItem('token',tokenDB);
+    localStorage.setItem('token', tokenDB);
     usuario = userDB;
     document.title = usuario.nombre;
 
     await conectarSocket();
-} 
+}
 
 const conectarSocket = async () => {
-    
-    const socket = io({
-        'extraHeaders': { 
-          'x-token': localStorage.getItem('token')
+
+    socket = io({
+        'extraHeaders': {
+            'x-token': localStorage.getItem('token')
         }
-      });
+    });
+
+    socket.on('connect', () => {
+        console.log('Sockets Online');
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Sockets Offline');
+    });
+
+    socket.on('usuarios-activos', () => {
+        // TODO:
+    });
+
+    socket.on('recibir-mensaje', () => {
+        // TODO:
+    });
+
+    socket.on('mensaje-privados', () => {
+        // TODO:
+    });
 
 }
 
 
-const main = async() => {
+const main = async () => {
 
     await validarJWT();
 
