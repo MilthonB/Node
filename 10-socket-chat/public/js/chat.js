@@ -1,4 +1,9 @@
-
+//Referencia
+const txtUid = document.querySelector('#txtUid');
+const txtMensaje = document.querySelector('#txtMensaje');
+const ulUsuarios = document.querySelector('#ulUsuarios');
+const ulMensajes = document.querySelector('#ulMensajes');
+const btnSalir  = document.querySelector('#btnSalir');
 
 const url = (window.location.hostname.includes('localhost'))
 ? 'http://localhost:4500/api/auth/'

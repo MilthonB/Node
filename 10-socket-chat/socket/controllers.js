@@ -10,7 +10,7 @@ const socketController = async ( socket ) => {
     if( !usuario ){
         socket.disconnect();
     } 
-    console.log('Se conecto: '+usuario.nombre);
+    console.log('Se conecto: '+usuario);
 
 } 
 
