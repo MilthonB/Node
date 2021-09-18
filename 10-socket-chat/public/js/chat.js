@@ -55,13 +55,33 @@ const conectarSocket = async () => {
         dibujarUsuarios(payload);
     });
 
-    socket.on('recibir-mensaje', () => {
-        // TODO:
+    socket.on('recibir-mensaje', ( payload ) => {
+        dibujarMensaje(payload);
     });
 
     socket.on('mensaje-privados', () => {
         // TODO:
     });
+
+}
+
+const dibujarMensaje = ( mensajes = []) => {
+
+    let mensajeHTML = '';
+    mensajes.forEach(({ nombre, mensaje }) => {
+        mensajeHTML  += `
+
+            <li>
+                <p>
+                    <spam class="text-danger"> ${nombre} </spam>
+                    <spam> ${mensaje} </spam>
+                </p>
+            </li>
+
+
+        `
+    });
+    ulMensajes.innerHTML = mensajeHTML;
 
 }
 
@@ -84,6 +104,19 @@ const dibujarUsuarios = ( usuario = []) => {
     ulUsuarios.innerHTML = usersHTML;
 
 }
+
+
+txtMensaje.addEventListener( 'keyup', ( {keyCode} ) => {
+    
+    const mensaje = txtMensaje.value;
+
+    if( keyCode !== 13 ){return;}
+    if(mensaje.length === 0){return;}
+
+    
+    socket.emit('enviar-mensaje', {mensaje});
+
+} );
 
 
 const main = async () => {

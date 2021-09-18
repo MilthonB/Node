@@ -36,7 +36,6 @@ class ChatMensajes {
 
 
     conectarUsuaios( usuario ) {
-        console.log(usuario);
         this.usuario[usuario.id] = usuario;
     }
 
