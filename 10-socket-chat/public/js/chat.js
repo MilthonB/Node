@@ -51,8 +51,8 @@ const conectarSocket = async () => {
         console.log('Sockets Offline');
     });
 
-    socket.on('usuarios-activos', () => {
-        // TODO:
+    socket.on('usuarios-activos', ( payload ) => {
+        console.log(payload);
     });
 
     socket.on('recibir-mensaje', () => {
