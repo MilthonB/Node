@@ -41,6 +41,7 @@ class ChatMensajes {
     }
 
     desconectrarUsuario( id ) {
+        console.log(id);
         delete this.usuario[id];
     }
 

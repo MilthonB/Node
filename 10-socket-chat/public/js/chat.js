@@ -52,7 +52,7 @@ const conectarSocket = async () => {
     });
 
     socket.on('usuarios-activos', ( payload ) => {
-        console.log(payload);
+        dibujarUsuarios(payload);
     });
 
     socket.on('recibir-mensaje', () => {
@@ -62,6 +62,26 @@ const conectarSocket = async () => {
     socket.on('mensaje-privados', () => {
         // TODO:
     });
+
+}
+
+const dibujarUsuarios = ( usuario = []) => {
+
+    let usersHTML = '';
+    usuario.forEach(({ nombre, uid }) => {
+        usersHTML  += `
+
+            <li>
+                <p>
+                    <h5 class="text-success"> ${nombre} </h5>
+                    <spam class="fs-6 text-muted" > ${uid} </spam>
+                </p>
+            </li>
+
+
+        `
+    });
+    ulUsuarios.innerHTML = usersHTML;
 
 }
 
