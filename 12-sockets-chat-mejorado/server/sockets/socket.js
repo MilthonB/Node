@@ -1,42 +1,55 @@
 const { io } = require('../server');
 
+const { Usuarios } = require('../classes/usuarios');
+const { crearMensaje } = require('../utils/utilidades');
+
+const usuarios = new Usuarios();
 
 io.on('connection', (client) => {
 
-    console.log('Usuario conectado');
+    client.on('entrar-chat', (data, callback) => {
 
-    client.emit('enviarMensaje', {
-        usuario: 'Administrador',
-        mensaje: 'Bienvenido a esta aplicación'
+        if (!data.nombre) {
+            return callback({
+                error: true,
+                msg: 'Nombre / Sala es necesario'
+            });
+        }
+
+        client.join(data.sala); // creacion de sala 
+
+        let personas = usuarios.agregarPersona(client.id, data.nombre, data.sala);
+
+        client.broadcast.to(data.sala).emit('lista-personas', usuarios.getPersonasPorSalas(data.sala));
+
+        callback( usuarios.getPersonasPorSalas(data.sala) );
+
     });
 
+    client.on('crear-mensaje', (data) => {
 
+        //otras opcioens 
+        let persona = usuarios.getPersona( client.id )
+        
+        let mensaje = crearMensaje( persona.nombre, data.mensaje );
+
+        client.broadcast.to(persona.sala).emit('crear-mensaje', mensaje);
+
+    });
 
     client.on('disconnect', () => {
-        console.log('Usuario desconectado');
+        let personBorrada = usuarios.borrarPersona(client.id) || '';
+
+        client.broadcast.to(personBorrada.sala).emit('crear-mensaje', crearMensaje('Administrador', `${personBorrada.nombre} salió`));
+
+        client.broadcast.to(personBorrada.sala).emit('lista-personas', usuarios.getPersonasPorSalas(personBorrada.sala));
+
     });
 
-    // Escuchar el cliente
-    client.on('enviarMensaje', (data, callback) => {
-
-        console.log(data);
-
-        client.broadcast.emit('enviarMensaje', data);
-
-
-        // if (mensaje.usuario) {
-        //     callback({
-        //         resp: 'TODO SALIO BIEN!'
-        //     });
-
-        // } else {
-        //     callback({
-        //         resp: 'TODO SALIO MAL!!!!!!!!'
-        //     });
-        // }
-
-
-
+    //Mensaje privados
+    client.on('mensaje-privado', data => {
+        let persona = usuarios.getPersona( client.id );
+        client.broadcast.to(data.para).emit('mensaje-privado', crearMensaje( persona.nombre, data.mensaje));
     });
 
 });
