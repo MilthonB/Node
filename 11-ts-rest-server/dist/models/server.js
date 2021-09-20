@@ -40,7 +40,13 @@ class Server {
     }
     conexionDB() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield config_1.default();
+            try {
+                yield config_1.default.authenticate();
+                console.log('Base de datos online');
+            }
+            catch (error) {
+                throw new Error('Ocurrio un error en la conexion de la base de datos');
+            }
         });
     }
     listen() {
