@@ -3,6 +3,7 @@ import express,{Application} from "express";
 import cors from "cors";
 
 import UserRoutes from "../routes/usuarios.routes";
+import conexionDB from "../db/config";
 
 
 
@@ -18,7 +19,8 @@ class Server {
         this.app = express();
         this.port = process.env.PORT || '4500';
        
-
+        
+        this.conexionDB();
         this.middleware();
         this.router();
     }
@@ -36,6 +38,10 @@ class Server {
     }
     router(){ 
         this.app.use( this.apiPath.usuarios, UserRoutes );
+    }
+
+    async conexionDB(){
+        await conexionDB();
     }
 
 
