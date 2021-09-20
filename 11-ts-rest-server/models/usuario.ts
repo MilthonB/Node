@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import conexionDB from "../db/config" ;
 
 
-const Usuario = conexionDB.define('Usuario',{
+const Usuario = conexionDB.define('usuario',{
     nombre: {
         type: DataTypes.STRING
     },
@@ -11,7 +11,7 @@ const Usuario = conexionDB.define('Usuario',{
     },
     estado: {
         type: DataTypes.BOOLEAN
-    }
+    },
 });
 
 

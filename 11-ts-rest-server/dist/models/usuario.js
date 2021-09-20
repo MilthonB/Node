@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const config_1 = __importDefault(require("../db/config"));
-const Usuario = config_1.default.define('Usuario', {
+const Usuario = config_1.default.define('usuario', {
     nombre: {
         type: sequelize_1.DataTypes.STRING
     },
@@ -14,7 +14,7 @@ const Usuario = config_1.default.define('Usuario', {
     },
     estado: {
         type: sequelize_1.DataTypes.BOOLEAN
-    }
+    },
 });
 exports.default = Usuario;
 //# sourceMappingURL=usuario.js.map
