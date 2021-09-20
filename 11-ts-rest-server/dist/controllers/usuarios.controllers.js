@@ -22,13 +22,19 @@ const getUsuarios = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     });
 });
 exports.getUsuarios = getUsuarios;
-const getUsuario = (req, res) => {
+const getUsuario = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
+    const usuario = yield usuario_1.default.findByPk(id);
+    if (!usuario) {
+        return res.status(400).json({
+            msg: `El id ${id} no esta registrado`
+        });
+    }
     res.status(200).json({
         mdg: 'Usuario',
-        id
+        usuario
     });
-};
+});
 exports.getUsuario = getUsuario;
 const postUsuario = (req, res) => {
     const { body } = req;

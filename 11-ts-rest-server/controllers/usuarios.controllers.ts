@@ -14,13 +14,21 @@ export const getUsuarios = async( req: Request , res: Response ) => {
 }
 
 
-export const getUsuario = ( req: Request , res: Response ) => {
+export const getUsuario = async ( req: Request , res: Response ) => {
 
     const {id} = req.params;
 
+    const usuario = await Usuario.findByPk(id);
+
+    if( !usuario ){
+        return res.status(400).json({
+            msg: `El id ${id} no esta registrado`
+        })
+    }
+
     res.status(200).json({
         mdg:'Usuario',
-        id
+        usuario
     })
 
 }
