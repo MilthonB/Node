@@ -89,13 +89,33 @@ export const putUsuario = async ( req: Request , res: Response ) => {
 
 }
 
-export const deleteUsuario = ( req: Request , res: Response ) => {
+export const deleteUsuario = async ( req: Request , res: Response ) => {
 
     const {id} = req.params;
 
-    res.status(200).json({
-        mdg:'DeleteUsuarios',
-        id
-    })
+    try {
+        
+        const usuario = await Usuario.findByPk(id);
+
+        if( !usuario ){
+            return res.status(400).json({
+                msg: `El id ${id} no esta registrado`
+            })
+        }
+
+        // await usuario.destroy();
+        await usuario.update({estado:0});
+
+        res.status(200).json({
+            mdg:'DeleteUsuarios',
+            id
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            msg:'Hable con el administrador'
+        })
+    }
+
 
 }
