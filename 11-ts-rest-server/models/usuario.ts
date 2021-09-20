@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
-import conexionDB from "../db/config" ;
+import conexionDB from "../db/config";
 
 
-const Usuario = conexionDB.define('usuario',{
+const Usuario = conexionDB.define('usuario', {
     nombre: {
         type: DataTypes.STRING
     },

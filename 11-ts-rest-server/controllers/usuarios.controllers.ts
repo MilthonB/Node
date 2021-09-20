@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Usuario from "../models/usuario";
+import Usuario  from '../models/usuario';
 
 
 export const getUsuarios = async( req: Request , res: Response ) => {
@@ -34,25 +34,58 @@ export const getUsuario = async ( req: Request , res: Response ) => {
 }
 
 
-export const postUsuario = ( req: Request , res: Response ) => {
+export const postUsuario = async ( req: Request , res: Response ) => {
 
     const { body } = req;
 
-    res.status(200).json({
-        mdg:'PostUsuarios',
-        body
-    })
+
+    try {
+
+        const usuario = await Usuario.create(body);
+        
+        res.status(200).json({
+            mdg:'PostUsuarios',
+            usuario
+        })
+        
+    } catch (error) {
+        res.status(500).json({
+            msg:'Hable con el administrador'
+        })
+    }
+    
+
 
 }
 
-export const putUsuario = ( req: Request , res: Response ) => {
+export const putUsuario = async ( req: Request , res: Response ) => {
 
     const {id} = req.params;
+    const { body } = req;
 
-    res.status(200).json({
-        mdg:'PutUsuarios',
-        id
-    })
+    try {
+        
+        const usuario = await Usuario.findByPk(id);
+
+        if( !usuario ){
+            return res.status(400).json({
+                msg: `El id ${id} no esta registrado`
+            })
+        }
+
+        await usuario.update( body );
+
+        res.status(200).json({
+            mdg:'PutUsuarios',
+            usuario
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            msg:'Hable con el administrador'
+        })
+    }
+
 
 }
 
