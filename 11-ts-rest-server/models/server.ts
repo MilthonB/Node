@@ -1,16 +1,28 @@
 
-import express from "express";
+import express,{Application} from "express";
+
+import UserRoutes from "../routes/usuarios.routes";
 
 
 
 class Server {
 
-    private app;
-    private port;
+    private app:Application;
+    private port: string;
+    private apiPath = {
+        usuarios : '/api/usuarios'
+    };
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || 4500;
+        this.port = process.env.PORT || '4500';
+       
+
+        this.router();
+    }
+
+    router(){
+        this.app.use( this.apiPath.usuarios, UserRoutes );
     }
 
 
